@@ -17,7 +17,7 @@ public class MachineUIImpl implements MachineUI {
 
     @Override
     public void displayGreetingMessage() {
-        System.out.println("Greetings");
+        System.out.println("**** Greetings from Soda Machine ***");
     }
 
     @Override
@@ -26,7 +26,7 @@ public class MachineUIImpl implements MachineUI {
         Arrays.stream(Product.values()).forEach(product -> {
             if (!product.equals(Product.UNKNOWN)) {
                 System.out.println("Name: " + product.getName() + ","
-                        + " Price: " + product.getPrice() + ","
+                        + " Price: " + product.getPrice() * 1000 + " VND,"
                         + " Option number: " + product.getOption());
             }
         });
@@ -45,7 +45,7 @@ public class MachineUIImpl implements MachineUI {
 
     @Override
     public void displayQuantityInputPrompt() {
-        System.out.print("How many products do you want? ");
+        System.out.print("Choose quantity of product: ");
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MachineUIImpl implements MachineUI {
 
     @Override
     public void displayRunAgainPrompt() {
-        System.out.println("Program exitting... Please run again!");
+        System.out.println("Program exited... Try running again!");
     }
 
     @Override
@@ -66,7 +66,6 @@ public class MachineUIImpl implements MachineUI {
     @Override
     public void displayCashNotePrompt() {
         System.out.print("Please input your notes, space seperated (Example: 10 20 50 50) : ");
-        S
     }
 
     @Override
@@ -89,16 +88,16 @@ public class MachineUIImpl implements MachineUI {
         System.out.println("Order cancelled, refunding...");
         controller.deliverRefundToUSer(request.getQuantity());
         throw new UserCancelException("User cancelled the request");
-
     }
 
 
     @Override
     public void displayPaymentResult(boolean success) {
         if(success) {
-            System.out.println("Order completed!");
+            System.out.println("*********************************************Order completed!********************************************************");
+            System.out.println();
         } else{
-            System.out.print("Caught an exception: ");
+            System.out.print("Order failed: ");
         }
     }
 
@@ -106,7 +105,7 @@ public class MachineUIImpl implements MachineUI {
         System.out.println("You are ordering product: " + request.getProduct());
         System.out.println("Total money to pay: " + controller.calculateTotalPayment(request)*1000 + " VND");
         System.out.println("You inputted: " + controller.calculateTotalMoneyInput(cashNoteBundle)*1000 + " VND");
-        System.out.println("Do you really want to order? (Y/N)");
+        System.out.println("Do you really want to proceed? (Y/N) ");
         /* Prompt user to choose confirm ordering */
         while (true) {
             String confirmation = new Scanner(System.in).next();

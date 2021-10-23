@@ -9,14 +9,14 @@ public class CashBackGiverImpl implements CashbackGiver {
         if (value == 0) {
             return;
         }
-        System.out.println("Delivering change: " + value*1000 + " VND...");
-        System.out.println("================CASHBACK DELIVERED SUCCESSFULLY================");
+        System.out.println("Delivering change: " + value * 1000 + " VND...");
+        System.out.println("Cashback delivered successfully...");
     }
 
     @Override
     public void deliverRefundToUser(int value) {
         /* Pretend to deliver refund to user */
-        System.out.println("Delivering refund: " + value*1000 + " VND...");
+        System.out.println("Delivering refund: " + value * 1000 + " VND...");
         System.out.println("================REFUND DELIVERED SUCCESSFULLY================");
     }
 
