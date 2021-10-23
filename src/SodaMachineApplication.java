@@ -10,12 +10,12 @@ import java.util.*;
 
 public class SodaMachineApplication {
     public static void main (String[] args){
-        System.out.println("This is a simulator of a soda selling machine .....");
-        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("This is a simulator of a soda selling machine ... MOMO TEST");
+        Scanner scanner = new Scanner(System.in);
+        MachineUI machineUI = new MachineUIImpl();
         while (true) {
             /* Display screen */
-            MachineUI machineUI = new MachineUIImpl();
             machineUI.displayGreetingMessage();
             machineUI.displayAvailableProducts();
 
@@ -41,7 +41,6 @@ public class SodaMachineApplication {
             machineUI.displayCashNotePrompt();
 
             List<Integer> inputCashNotes = new LinkedList<>();
-
             for (int i = 0; i < numOfNotesInputting; i++) {
                 inputCashNotes.add(scanner.nextInt());
             }
@@ -56,7 +55,6 @@ public class SodaMachineApplication {
                 machineUI.displayExceptionCauseMessage(e.getMessage());
                 continue;
             }
-
             machineUI.displayPaymentResult(true);
         }
     }
