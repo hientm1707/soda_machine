@@ -50,12 +50,12 @@ public class MachineUIImpl implements MachineUI {
 
     @Override
     public void displayExceptionMessage() {
-        System.out.println("Something went wrong, please check your input! ");
+        System.out.println("Please check your input! ");
     }
 
     @Override
     public void displayRunAgainPrompt() {
-        System.out.println("Program exited... Try running again!");
+        System.out.println("Order failed... Restarting...!");
     }
 
     @Override
@@ -95,7 +95,6 @@ public class MachineUIImpl implements MachineUI {
     public void displayPaymentResult(boolean success) {
         if(success) {
             System.out.println("*********************************************Order completed!********************************************************");
-            System.out.println();
         } else{
             System.out.print("Order failed: ");
         }
@@ -114,7 +113,7 @@ public class MachineUIImpl implements MachineUI {
             } else if ("N".equals(confirmation)) {
                 return false;
             }
-            System.out.println("Invalid input, please type either Y or N ");
+            System.out.print("Invalid input, please type either Y or N ");
         }
     }
 }
