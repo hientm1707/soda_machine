@@ -1,10 +1,11 @@
-package calculator;
-import cashnotes.CashNote;
-import cashnotes.CashNoteBundle;
+package interfaces.impl;
+import interfaces.Calculator;
+import entities.cashnote.CashNote;
+import entities.cashnote.CashNoteBundle;
 import request.PurchaseRequest;
-import exception.NotEnoughMoneyException;
+import exceptions.InsufficientMoneyException;
 
-public class MyCalculator implements Calculator{
+public class CalculatorImpl implements Calculator {
     @Override
     public int calculateTotalPayment(PurchaseRequest request) {
         return request.getQuantity() * request.getProduct().getPrice();
@@ -14,7 +15,7 @@ public class MyCalculator implements Calculator{
     public int calculateChange(PurchaseRequest request, CashNoteBundle bundle) {
         int change = calculateTotalMoneyInput(bundle) - calculateTotalPayment(request);
         if (change < 0){
-            throw new NotEnoughMoneyException("Not enough money");
+            throw new InsufficientMoneyException("Not enough money");
         }
         return change;
     }

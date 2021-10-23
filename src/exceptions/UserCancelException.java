@@ -1,4 +1,4 @@
-package exception;
+package exceptions;
 
 public class UserCancelException extends RuntimeException {
     public UserCancelException(String message) {

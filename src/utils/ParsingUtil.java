@@ -1,6 +1,7 @@
 package utils;
 
-import cashnotes.CashNoteBundle;
+import entities.cashnote.CashNote;
+import entities.cashnote.CashNoteBundle;
 
 import java.util.List;
 
@@ -11,16 +12,17 @@ public class ParsingUtil {
         int numOfFiftyNotes = 0;
         int numOfOneHundredNotes = 0;
         int numOfTwoHundredNotes = 0;
+
         for (Integer note : cashNotes){
-          if (note.equals(10)) {
+          if (note.equals(CashNote.TEN.getValue())) {
               numOfTenNotes++;
-          } else if (note.equals(20)){
+          } else if (note.equals(CashNote.TWENTY.getValue())){
               numOfTwentyNotes++;
-          } else if (note.equals(50)){
+          } else if (note.equals(CashNote.FIFTY.getValue())){
               numOfFiftyNotes++;
-          } else if (note.equals(100)){
+          } else if (note.equals(CashNote.ONE_HUNDRED.getValue())){
               numOfOneHundredNotes++;
-          } else if (note.equals(200)){
+          } else if (note.equals(CashNote.TWO_HUNDRED.getValue())){
               numOfTwoHundredNotes++;
           }
         }

@@ -1,7 +1,7 @@
 package utils;
 
-import exception.InvalidOptionException;
-import exception.InvalidQuantityException;
+import exceptions.InvalidOptionException;
+import exceptions.InvalidQuantityException;
 
 public class Validator {
     private static final int MIN_OPTION = 1;

@@ -1,4 +1,4 @@
-package product;
+package entities.product;
 
 public class ProductFactory{
     public static Product createProduct(int option) {

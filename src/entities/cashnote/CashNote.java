@@ -1,4 +1,4 @@
-package cashnotes;
+package entities.cashnote;
 
 public enum CashNote {
     TEN(10),
@@ -7,7 +7,7 @@ public enum CashNote {
     ONE_HUNDRED(100),
     TWO_HUNDRED(200);
 
-    private int value;
+    private final int value;
 
     CashNote(int value) {
         this.value = value;
