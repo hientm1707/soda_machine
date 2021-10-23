@@ -15,7 +15,8 @@ public class CashBackGiverImpl implements CashbackGiver {
 
     @Override
     public void deliverRefundToUser(int value) {
-        System.out.println("Delivering refund: " +value*1000 + " VND...");
+        /* Pretend to deliver refund to user */
+        System.out.println("Delivering refund: " + value*1000 + " VND...");
         System.out.println("================REFUND DELIVERED SUCCESSFULLY================");
     }
 

@@ -31,6 +31,7 @@ public class MachineController {
     public void releaseProduct(Product product, int quantity){
         productReleaser.releaseProduct(product, quantity);
     }
+
     public void deliverChangeToUser(int value){
         cashBackGiver.deliverChangeToUser(value);
     }
@@ -44,9 +45,6 @@ public class MachineController {
         return calculator.calculateTotalPayment(request);
     }
 
-    public int calculateChange(PurchaseRequest request, CashNoteBundle bundle) {
-        return calculator.calculateChange(request, bundle);
-    }
 
     public int calculateTotalMoneyInput(CashNoteBundle bundle) {
         return calculator.calculateTotalMoneyInput(bundle);

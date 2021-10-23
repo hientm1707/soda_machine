@@ -5,9 +5,9 @@ import controller.MachineController;
 import entities.cashnote.CashNoteBundle;
 import entities.product.Product;
 import exceptions.UserCancelException;
-
 import interfaces.MachineUI;
 import request.PurchaseRequest;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -35,7 +35,7 @@ public class MachineUIImpl implements MachineUI {
     @Override
     public void displayMoneyInputPrompt() {
         System.out.println("*** Please input cash notes to the machine ***");
-        System.out.println("** Note that we only accept 10, 20, 50, 100, 200 (thousand VND) notes **");
+        System.out.println("** Note that we only accept 10, 20, 50, 100, 200 (thousand VND) notes, others will be ignored **");
     }
 
     @Override
@@ -65,7 +65,8 @@ public class MachineUIImpl implements MachineUI {
 
     @Override
     public void displayCashNotePrompt() {
-        System.out.print("Please input your notes, space seperated (Eg: 10 20 50 50) : ");
+        System.out.print("Please input your notes, space seperated (Example: 10 20 50 50) : ");
+        S
     }
 
     @Override
@@ -83,11 +84,12 @@ public class MachineUIImpl implements MachineUI {
             System.out.println("Order confirmed, releasing product and change if any...");
             controller.releaseProduct(request.getProduct(), request.getQuantity());
             controller.deliverChangeToUser(change);
-        } else{
-            System.out.println("Order cancelled, refunding...");
-            controller.deliverRefundToUSer(request.getQuantity());
-            throw new UserCancelException("User cancelled the request");
+            return;
         }
+        System.out.println("Order cancelled, refunding...");
+        controller.deliverRefundToUSer(request.getQuantity());
+        throw new UserCancelException("User cancelled the request");
+
     }
 
 
