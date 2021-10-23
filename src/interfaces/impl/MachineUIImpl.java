@@ -1,8 +1,13 @@
-import cashnotes.CashNoteBundle;
-import exception.UserCancelException;
-import product.Product;
-import request.PurchaseRequest;
+package interfaces.impl;
 
+
+import controller.MachineController;
+import entities.cashnote.CashNoteBundle;
+import entities.product.Product;
+import exceptions.UserCancelException;
+
+import interfaces.MachineUI;
+import request.PurchaseRequest;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -71,15 +76,15 @@ public class MachineUIImpl implements MachineUI {
 
     @Override
     public void handlePurchaseRequest(PurchaseRequest request, CashNoteBundle cashNoteBundle) {
-        System.out.println("==============================PROCESSING ORDER====================================");
+        System.out.println("==============================ORDER INFO====================================");
         int change = controller.getChange(request, cashNoteBundle);
         boolean userConfirmedOrder = prompConfirmation(request, cashNoteBundle);
         if (userConfirmedOrder){
-            System.out.println("Order confirmed, releasing product and change if any");
+            System.out.println("Order confirmed, releasing product and change if any...");
             controller.releaseProduct(request.getProduct(), request.getQuantity());
             controller.deliverChangeToUser(change);
         } else{
-            System.out.println("Order cancelled, refunding");
+            System.out.println("Order cancelled, refunding...");
             controller.deliverRefundToUSer(request.getQuantity());
             throw new UserCancelException("User cancelled the request");
         }
@@ -97,6 +102,7 @@ public class MachineUIImpl implements MachineUI {
 
     private boolean prompConfirmation(PurchaseRequest request, CashNoteBundle cashNoteBundle) {
         System.out.println("You are ordering product: " + request.getProduct());
+        System.out.println("Total money to pay: " + controller.calculateTotalPayment(request)*1000 + " VND");
         System.out.println("You inputted: " + controller.calculateTotalMoneyInput(cashNoteBundle)*1000 + " VND");
         System.out.println("Do you really want to order? (Y/N)");
         /* Prompt user to choose confirm ordering */

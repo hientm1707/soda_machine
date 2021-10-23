@@ -1,6 +1,6 @@
 package request;
 
-import product.Product;
+import entities.product.Product;
 
 public class PurchaseRequest {
     private final Product product;

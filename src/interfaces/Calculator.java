@@ -1,6 +1,6 @@
-package calculator;
+package interfaces;
 
-import cashnotes.CashNoteBundle;
+import entities.cashnote.CashNoteBundle;
 import request.PurchaseRequest;
 
 public interface Calculator {

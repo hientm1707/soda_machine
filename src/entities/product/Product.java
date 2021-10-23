@@ -1,4 +1,4 @@
-package product;
+package entities.product;
 
 public enum Product {
 

@@ -1,4 +1,6 @@
-import cashnotes.CashNoteBundle;
+package interfaces;
+
+import entities.cashnote.CashNoteBundle;
 import request.PurchaseRequest;
 
 public interface MachineUI {

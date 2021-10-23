@@ -1,4 +1,4 @@
-package cashnotes;
+package entities.cashnote;
 
 public class CashNoteBundle {
     private int numOfTenNotes;

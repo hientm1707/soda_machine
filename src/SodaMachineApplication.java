@@ -1,5 +1,7 @@
-import cashnotes.CashNoteBundle;
-import product.ProductFactory;
+import entities.cashnote.CashNoteBundle;
+import interfaces.MachineUI;
+import interfaces.impl.MachineUIImpl;
+import entities.product.ProductFactory;
 import request.PurchaseRequest;
 import utils.ParsingUtil;
 import utils.Validator;
@@ -16,7 +18,7 @@ public class SodaMachineApplication {
         machineUI.displayGreetingMessage();
         machineUI.displayAvailableProducts();
 
-        /* User choose product and product to buy */
+        /* User choose entities.product and entities.product to buy */
         machineUI.displayOptionInputPrompt();
         int option = scanner.nextInt();
         machineUI.displayQuantityInputPrompt();
@@ -38,17 +40,19 @@ public class SodaMachineApplication {
         machineUI.displayCashNotePrompt();
 
         List<Integer> inputCashNotes = new LinkedList<>();
-        for (int i = 0 ; i <numOfNotesInputting; i++ ) {
+
+        for (int i = 0 ; i < numOfNotesInputting; i++ ) {
             inputCashNotes.add(scanner.nextInt());
         }
 
         CashNoteBundle cashNoteBundle = ParsingUtil.parseListOfCashNotesToCashNoteBundle(inputCashNotes);
         PurchaseRequest purchaseRequest = new PurchaseRequest(ProductFactory.createProduct(option), quantity);
+
         try {
             machineUI.handlePurchaseRequest(purchaseRequest, cashNoteBundle);
         } catch (Exception e){
             machineUI.displayPaymentResult(false);
-            System.out.println(e.getMessage());
+            machineUI.displayExceptionCauseMessage(e.getMessage());
         }
         machineUI.displayPaymentResult(true);
     }
