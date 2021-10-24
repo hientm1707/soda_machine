@@ -25,18 +25,22 @@ public class MachineInterfaceImpl implements MachineInterface {
         this.state = new IdleState();
     }
 
+    @Override
     public void setState(boolean state) {
         this.state = state ? new SuccessState() : new FailState();
     }
 
+    @Override
     public LinkedList<Integer> getInputtedCashNotes() {
         return this.inputtedCashNotes;
     }
 
+    @Override
     public void receiveNote(int note){
         this.inputtedCashNotes.add(note);
     }
 
+    @Override
     public void clearMoneyBuffer(){
         this.inputtedCashNotes.clear();
     }
@@ -110,12 +114,10 @@ public class MachineInterfaceImpl implements MachineInterface {
             System.out.println("Order confirmed, releasing product and change if any...");
             controller.releaseProduct(request.getProduct(), request.getQuantity());
             controller.deliverChangeToUser(change);
-            this.setState(true);
             return;
         }
         System.out.println("Order cancelled, refunding...");
         controller.deliverRefundToUser(controller.getTotalMoneyInput(cashNoteBundle));
-        this.setState(false);
         throw new UserCancelException("User cancelled the entities.request");
     }
 
