@@ -16,9 +16,14 @@ public class MachineInterfaceImpl implements MachineInterface {
 
     private State state;
 
-    private LinkedList<Integer> inputtedCashNotes = new LinkedList<>();
+    private LinkedList<Integer> inputtedCashNotes;
 
     private final MachineController controller = new MachineController();
+
+    public MachineInterfaceImpl(){
+        this.inputtedCashNotes = new LinkedList<>();
+        this.state = new IdleState();
+    }
 
     public void setState(boolean state) {
         this.state = state ? new SuccessState() : new FailState();

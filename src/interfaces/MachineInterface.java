@@ -20,6 +20,6 @@ public interface MachineInterface {
     void handlePurchaseRequest(PurchaseRequest request, CashNoteBundle cashNoteBundle);
     void receiveNote(int note);
     void clearMoneyBuffer();
-    List<Integer> getInputtedCashNotes();
     void setState(boolean b);
+    List<Integer> getInputtedCashNotes();
 }
