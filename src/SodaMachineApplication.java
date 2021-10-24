@@ -1,6 +1,6 @@
 import entities.cashnote.CashNoteBundle;
-import interfaces.MachineUI;
-import interfaces.impl.MachineUIImpl;
+import interfaces.MachineInterface;
+import interfaces.impl.MachineInterfaceImpl;
 import entities.product.ProductFactory;
 import request.PurchaseRequest;
 import utils.ParsingUtil;
@@ -10,52 +10,55 @@ import java.util.*;
 
 public class SodaMachineApplication {
     public static void main (String[] args){
-
         System.out.println("This is a simulator of a soda selling machine ... MOMO TEST");
         Scanner scanner = new Scanner(System.in);
-        MachineUI machineUI = new MachineUIImpl();
+        MachineInterface machineInterface = new MachineInterfaceImpl();
         while (true) {
             /* Display screen */
-            machineUI.displayGreetingMessage();
-            machineUI.displayAvailableProducts();
+            machineInterface.displayGreetingMessage();
+            machineInterface.displayAvailableProducts();
 
             /* User choose entities.product and entities.product to buy */
-            machineUI.displayOptionInputPrompt();
+            machineInterface.displayOptionInputPrompt();
             int option = scanner.nextInt();
-            machineUI.displayQuantityInputPrompt();
+            machineInterface.displayQuantityInputPrompt();
             int quantity = scanner.nextInt();
 
+            /* Validate input */
             try {
                 Validator.validateOptionAndQuantity(option, quantity);
             } catch (Exception e) {
-                machineUI.displayExceptionMessage();
-                machineUI.displayExceptionCauseMessage(e.getMessage());
-                machineUI.displayRunAgainPrompt();
+                machineInterface.displayExceptionMessage();
+                machineInterface.displayExceptionCauseMessage(e.getMessage());
+                machineInterface.displayRunAgainPrompt();
                 continue;
             }
+
             /* Input cash notes  */
-            /* Only accept 10, 20, 50, 100, 200 K VND */
-            machineUI.displayMoneyInputPrompt();
-            machineUI.displayNumberOfNotesPrompt();
+            /* Only accept 10, 20, 50, 100, 200 (thousand) VND*/
+            machineInterface.displayMoneyInputPrompt();
+            machineInterface.displayNumberOfNotesPrompt();
             int numOfNotesInputting = scanner.nextInt();
-            machineUI.displayCashNotePrompt();
+            machineInterface.displayCashNotePrompt();
+
 
             List<Integer> inputCashNotes = new LinkedList<>();
             for (int i = 0; i < numOfNotesInputting; i++) {
                 inputCashNotes.add(scanner.nextInt());
             }
 
+            /* Parse to easy-to-handle object */
             CashNoteBundle cashNoteBundle = ParsingUtil.parseListOfCashNotesToCashNoteBundle(inputCashNotes);
             PurchaseRequest purchaseRequest = new PurchaseRequest(ProductFactory.createProduct(option), quantity);
 
             try {
-                machineUI.handlePurchaseRequest(purchaseRequest, cashNoteBundle);
+                machineInterface.handlePurchaseRequest(purchaseRequest, cashNoteBundle);
             } catch (Exception e) {
-                machineUI.displayPaymentResult(false);
-                machineUI.displayExceptionCauseMessage(e.getMessage());
+                machineInterface.displayPaymentResult();
+                machineInterface.displayExceptionCauseMessage(e.getMessage());
                 continue;
             }
-            machineUI.displayPaymentResult(true);
+            machineInterface.displayPaymentResult();
         }
     }
 }

@@ -7,13 +7,14 @@ import interfaces.CashBackDelivery;
 import interfaces.Releasable;
 
 
-import exceptions.InsufficientMoneyException;
+import exceptions.InsufficientMoneyInputException;
 import interfaces.impl.CalculatorImpl;
 
 import interfaces.impl.CashBackDeliveryImpl;
 import interfaces.impl.ProductReleaser;
 
 import request.PurchaseRequest;
+
 public class MachineController {
     private final Calculator calculator = new CalculatorImpl();
     private final CashBackDelivery cashBackDelivery = new CashBackDeliveryImpl();
@@ -23,7 +24,7 @@ public class MachineController {
         int totalPayment = calculator.calculateTotalPayment(request);
         int totalMoneyInput = calculator.calculateTotalMoneyInput(bundle);
         if (!isMoneyEnoughToOrder(totalPayment, totalMoneyInput)){
-            throw new InsufficientMoneyException("Not enough money to order");
+            throw new InsufficientMoneyInputException("Not enough money to order");
         }
         return totalMoneyInput - totalPayment;
     }

@@ -1,19 +1,25 @@
 package interfaces.impl;
 
-
 import controller.MachineController;
 import entities.cashnote.CashNoteBundle;
 import entities.product.Product;
 import exceptions.UserCancelException;
-import interfaces.MachineUI;
+import interfaces.MachineInterface;
+import interfaces.State;
 import request.PurchaseRequest;
-
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class MachineUIImpl implements MachineUI {
+public class MachineInterfaceImpl implements MachineInterface {
+
+
+    private State state;
 
     private final MachineController controller = new MachineController();
+
+    private void setState(boolean state) {
+        this.state = state ? new SuccessState() : new FailState();
+    }
 
     @Override
     public void displayGreetingMessage() {
@@ -25,8 +31,8 @@ public class MachineUIImpl implements MachineUI {
         System.out.println("Here are our available products, please choose (option, quantity):");
         Arrays.stream(Product.values()).forEach(product -> {
             if (!product.equals(Product.UNKNOWN)) {
-                System.out.println("Name: " + product.getName() + "|"
-                        + " Price: " + product.getPrice() * 1000 + " VND|"
+                System.out.println("Name: " + product.getName() + ","
+                        + " Price: " + product.getPrice() * 1000 + " VND,"
                         + " Option number: " + product.getOption());
             }
         });
@@ -80,25 +86,24 @@ public class MachineUIImpl implements MachineUI {
         System.out.println("==============================ORDER INFO====================================");
         int change = controller.getChange(request, cashNoteBundle);
         boolean userConfirmedOrder = prompConfirmation(request, cashNoteBundle);
+
         if (userConfirmedOrder){
             System.out.println("Order confirmed, releasing product and change if any...");
             controller.releaseProduct(request.getProduct(), request.getQuantity());
             controller.deliverChangeToUser(change);
+            this.setState(true);
             return;
         }
         System.out.println("Order cancelled, refunding...");
         controller.deliverRefundToUser(controller.getTotalMoneyInput(cashNoteBundle));
+        this.setState(false);
         throw new UserCancelException("User cancelled the request");
     }
 
 
     @Override
-    public void displayPaymentResult(boolean success) {
-        if(success) {
-            System.out.println("*********************************************Order completed!********************************************************");
-        } else {
-            System.out.print("Order failed: ");
-        }
+    public void displayPaymentResult() {
+       this.state.displayPaymentResult();
     }
 
     private boolean prompConfirmation(PurchaseRequest request, CashNoteBundle cashNoteBundle) {
