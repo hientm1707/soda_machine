@@ -14,6 +14,6 @@ public interface MachineUI {
     void displayNumberOfNotesPrompt();
     void displayCashNotePrompt();
     void displayExceptionCauseMessage(String message);
-    void handlePurchaseRequest(PurchaseRequest request, CashNoteBundle cashNoteBundle);
     void displayPaymentResult(boolean success);
+    void handlePurchaseRequest(PurchaseRequest request, CashNoteBundle cashNoteBundle);
 }

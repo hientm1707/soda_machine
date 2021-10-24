@@ -3,7 +3,6 @@ import interfaces.Calculator;
 import entities.cashnote.CashNote;
 import entities.cashnote.CashNoteBundle;
 import request.PurchaseRequest;
-import exceptions.InsufficientMoneyException;
 
 public class CalculatorImpl implements Calculator {
     @Override

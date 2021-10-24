@@ -17,7 +17,7 @@ public class MachineUIImpl implements MachineUI {
 
     @Override
     public void displayGreetingMessage() {
-        System.out.println("**** Greetings from Soda Machine ***");
+        System.out.println("***** Greetings from Soda Machine *****");
     }
 
     @Override
@@ -25,11 +25,12 @@ public class MachineUIImpl implements MachineUI {
         System.out.println("Here are our available products, please choose (option, quantity):");
         Arrays.stream(Product.values()).forEach(product -> {
             if (!product.equals(Product.UNKNOWN)) {
-                System.out.println("Name: " + product.getName() + ","
-                        + " Price: " + product.getPrice() * 1000 + " VND,"
+                System.out.println("Name: " + product.getName() + "|"
+                        + " Price: " + product.getPrice() * 1000 + " VND|"
                         + " Option number: " + product.getOption());
             }
         });
+        System.out.println("For safety issues, we only allow ordering at most 5 same products at a time");
     }
 
     @Override
@@ -40,12 +41,12 @@ public class MachineUIImpl implements MachineUI {
 
     @Override
     public void displayOptionInputPrompt() {
-        System.out.print("Please choose your product: ");
+        System.out.print("Please choose your product (option number): ");
     }
 
     @Override
     public void displayQuantityInputPrompt() {
-        System.out.print("Choose quantity of product: ");
+        System.out.print("Choose quantity of product (at most 5): ");
     }
 
     @Override
@@ -102,12 +103,13 @@ public class MachineUIImpl implements MachineUI {
 
     private boolean prompConfirmation(PurchaseRequest request, CashNoteBundle cashNoteBundle) {
         System.out.println("You are ordering product: " + request.getProduct());
-        System.out.println("Total money to pay: " + controller.getTotalPayment(request)*1000 + " VND");
-        System.out.println("You inputted: " + controller.getTotalMoneyInput(cashNoteBundle)*1000 + " VND");
+        System.out.println("Total money to pay: " + controller.getTotalPayment(request) * 1000 + " VND");
+        System.out.println("You inputted: " + controller.getTotalMoneyInput(cashNoteBundle) * 1000 + " VND");
         System.out.println("Do you really want to proceed? (Y/N) ");
         /* Prompt user to choose confirm ordering */
+        Scanner sc = new Scanner(System.in);
         while (true) {
-            String confirmation = new Scanner(System.in).next();
+            String confirmation = sc.next();
             if ("Y".equals(confirmation)) {
                 return true;
             } else if ("N".equals(confirmation)) {
