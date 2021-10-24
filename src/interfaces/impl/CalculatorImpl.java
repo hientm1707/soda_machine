@@ -3,21 +3,11 @@ import interfaces.Calculator;
 import entities.cashnote.CashNote;
 import entities.cashnote.CashNoteBundle;
 import request.PurchaseRequest;
-import exceptions.InsufficientMoneyException;
 
 public class CalculatorImpl implements Calculator {
     @Override
     public int calculateTotalPayment(PurchaseRequest request) {
         return request.getQuantity() * request.getProduct().getPrice();
-    }
-
-    @Override
-    public int calculateChange(PurchaseRequest request, CashNoteBundle bundle) {
-        int change = calculateTotalMoneyInput(bundle) - calculateTotalPayment(request);
-        if (change < 0){
-            throw new InsufficientMoneyException("Not enough money");
-        }
-        return change;
     }
 
     @Override

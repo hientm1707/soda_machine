@@ -1,8 +1,8 @@
 package interfaces.impl;
 
-import interfaces.CashbackGiver;
+import interfaces.CashBackDelivery;
 
-public class CashBackGiverImpl implements CashbackGiver {
+public class CashBackDeliveryImpl implements CashBackDelivery {
     @Override
     public void deliverChangeToUser(int value) {
         /* Pretend to deliver cashback to user */
