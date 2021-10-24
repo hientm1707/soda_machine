@@ -13,7 +13,7 @@ import interfaces.impl.CalculatorImpl;
 import interfaces.impl.CashBackDeliveryImpl;
 import interfaces.impl.ProductReleaser;
 
-import request.PurchaseRequest;
+import entities.request.PurchaseRequest;
 
 public class MachineController {
     private final Calculator calculator = new CalculatorImpl();

@@ -2,7 +2,7 @@ import entities.cashnote.CashNoteBundle;
 import interfaces.MachineInterface;
 import interfaces.impl.MachineInterfaceImpl;
 import entities.product.ProductFactory;
-import request.PurchaseRequest;
+import entities.request.PurchaseRequest;
 import utils.ParsingUtil;
 import utils.Validator;
 
@@ -13,7 +13,8 @@ public class SodaMachineApplication {
         System.out.println("This is a simulator of a soda selling machine ... MOMO TEST");
         Scanner scanner = new Scanner(System.in);
         MachineInterface machineInterface = new MachineInterfaceImpl();
-        while (true) {
+        while (true) { /* Loop forever */
+
             /* Display screen */
             machineInterface.displayGreetingMessage();
             machineInterface.displayAvailableProducts();
@@ -28,37 +29,41 @@ public class SodaMachineApplication {
             try {
                 Validator.validateOptionAndQuantity(option, quantity);
             } catch (Exception e) {
-                machineInterface.displayExceptionMessage();
-                machineInterface.displayExceptionCauseMessage(e.getMessage());
+                machineInterface.displayInputExceptionMessage();
+                machineInterface.displayMessage(e.getMessage());
                 machineInterface.displayRunAgainPrompt();
                 continue;
             }
 
             /* Input cash notes  */
-            /* Only accept 10, 20, 50, 100, 200 (thousand) VND*/
+            /* Only accept 10, 20, 50, 100, 200 (thousand) VND */
             machineInterface.displayMoneyInputPrompt();
             machineInterface.displayNumberOfNotesPrompt();
             int numOfNotesInputting = scanner.nextInt();
             machineInterface.displayCashNotePrompt();
 
-
-            List<Integer> inputCashNotes = new LinkedList<>();
+            /* receiveNotes */
             for (int i = 0; i < numOfNotesInputting; i++) {
-                inputCashNotes.add(scanner.nextInt());
+                machineInterface.receiveNote(scanner.nextInt());
             }
 
-            /* Parse to easy-to-handle object */
-            CashNoteBundle cashNoteBundle = ParsingUtil.parseListOfCashNotesToCashNoteBundle(inputCashNotes);
+            /* Parse to easy-to-handle objects */
+            CashNoteBundle cashNoteBundle = ParsingUtil.parseToCashNoteBundle((machineInterface.getInputtedCashNotes()));
             PurchaseRequest purchaseRequest = new PurchaseRequest(ProductFactory.createProduct(option), quantity);
 
+            /* Begin handling request */
             try {
                 machineInterface.handlePurchaseRequest(purchaseRequest, cashNoteBundle);
             } catch (Exception e) {
+                machineInterface.setState(false);
                 machineInterface.displayPaymentResult();
-                machineInterface.displayExceptionCauseMessage(e.getMessage());
+                machineInterface.displayMessage(e.getMessage());
+                machineInterface.clearMoneyBuffer();
                 continue;
             }
+            machineInterface.setState(true);
             machineInterface.displayPaymentResult();
+            machineInterface.clearMoneyBuffer();
         }
     }
 }

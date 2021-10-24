@@ -6,8 +6,9 @@ import entities.product.Product;
 import exceptions.UserCancelException;
 import interfaces.MachineInterface;
 import interfaces.State;
-import request.PurchaseRequest;
+import entities.request.PurchaseRequest;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class MachineInterfaceImpl implements MachineInterface {
@@ -15,15 +16,29 @@ public class MachineInterfaceImpl implements MachineInterface {
 
     private State state;
 
+    private LinkedList<Integer> inputtedCashNotes = new LinkedList<>();
+
     private final MachineController controller = new MachineController();
 
-    private void setState(boolean state) {
+    public void setState(boolean state) {
         this.state = state ? new SuccessState() : new FailState();
+    }
+
+    public LinkedList<Integer> getInputtedCashNotes() {
+        return this.inputtedCashNotes;
+    }
+
+    public void receiveNote(int note){
+        this.inputtedCashNotes.add(note);
+    }
+
+    public void clearMoneyBuffer(){
+        this.inputtedCashNotes.clear();
     }
 
     @Override
     public void displayGreetingMessage() {
-        System.out.println("***** Greetings from Soda Machine *****");
+        displayMessage("***** Greetings from Soda Machine *****");
     }
 
     @Override
@@ -47,16 +62,16 @@ public class MachineInterfaceImpl implements MachineInterface {
 
     @Override
     public void displayOptionInputPrompt() {
-        System.out.print("Please choose your product (option number): ");
+        System.out.print("Please choose your product (1 -> 3): ");
     }
 
     @Override
     public void displayQuantityInputPrompt() {
-        System.out.print("Choose quantity of product (at most 5): ");
+        System.out.print("Choose quantity of product (1 -> 5): ");
     }
 
     @Override
-    public void displayExceptionMessage() {
+    public void displayInputExceptionMessage() {
         System.out.println("Please check your input! ");
     }
 
@@ -76,7 +91,7 @@ public class MachineInterfaceImpl implements MachineInterface {
     }
 
     @Override
-    public void displayExceptionCauseMessage(String message) {
+    public void displayMessage(String message) {
         System.out.println(message);
     }
 
@@ -96,7 +111,7 @@ public class MachineInterfaceImpl implements MachineInterface {
         System.out.println("Order cancelled, refunding...");
         controller.deliverRefundToUser(controller.getTotalMoneyInput(cashNoteBundle));
         this.setState(false);
-        throw new UserCancelException("User cancelled the request");
+        throw new UserCancelException("User cancelled the entities.request");
     }
 
 
@@ -109,7 +124,7 @@ public class MachineInterfaceImpl implements MachineInterface {
         System.out.println("You are ordering product: " + request.getProduct());
         System.out.println("Total money to pay: " + controller.getTotalPayment(request) * 1000 + " VND");
         System.out.println("You inputted: " + controller.getTotalMoneyInput(cashNoteBundle) * 1000 + " VND");
-        System.out.println("Do you really want to proceed? (Y/N) ");
+        System.out.println("Do you really want to proceed? (Y/N) "); // N to cancel
         /* Prompt user to choose confirm ordering */
         Scanner sc = new Scanner(System.in);
         while (true) {

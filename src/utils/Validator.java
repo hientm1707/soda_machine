@@ -10,7 +10,7 @@ public class Validator {
     private static final int MAX_QUANTITY = 5;
     private static final String INVALID_OPTION = "Invalid option, option must be in range [1,3]";
     private static final String QUANTITY_FALLEN_SHORT = "Quantity must be greater than zero";
-    private static final String QUANTITY_EXCEEDED = "Exceeded the product quantity allowed";
+    private static final String QUANTITY_EXCEEDED = "Exceeded the product quantity allowed!";
 
     private static void validateOption(int option) {
         if (option > MAX_OPTION || option < MIN_OPTION) {

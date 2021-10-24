@@ -1,7 +1,9 @@
 package interfaces;
 
 import entities.cashnote.CashNoteBundle;
-import request.PurchaseRequest;
+import entities.request.PurchaseRequest;
+
+import java.util.List;
 
 public interface MachineInterface {
     void displayGreetingMessage();
@@ -9,11 +11,15 @@ public interface MachineInterface {
     void displayMoneyInputPrompt();
     void displayOptionInputPrompt();
     void displayQuantityInputPrompt();
-    void displayExceptionMessage();
+    void displayInputExceptionMessage();
     void displayRunAgainPrompt();
     void displayNumberOfNotesPrompt();
     void displayCashNotePrompt();
-    void displayExceptionCauseMessage(String message);
+    void displayMessage(String message);
     void displayPaymentResult();
     void handlePurchaseRequest(PurchaseRequest request, CashNoteBundle cashNoteBundle);
+    void receiveNote(int note);
+    void clearMoneyBuffer();
+    List<Integer> getInputtedCashNotes();
+    void setState(boolean b);
 }
