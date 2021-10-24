@@ -1,6 +1,7 @@
 package entities.product;
 
 public class ProductFactory{
+    /* This interface is to apply Factory Design Pattern */
     public static Product createProduct(int option) {
         switch (option){
             case 1:

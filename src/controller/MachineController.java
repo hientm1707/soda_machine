@@ -51,6 +51,6 @@ public class MachineController {
     }
 
     private boolean isMoneyEnoughToOrder(int totalPayment, int totalMoneyInput){
-        return totalMoneyInput > totalPayment;
+        return totalMoneyInput >= totalPayment;
     }
 }

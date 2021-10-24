@@ -36,7 +36,7 @@ public class MachineInterfaceImpl implements MachineInterface {
                         + " Option number: " + product.getOption());
             }
         });
-        System.out.println("For safety issues, we only allow ordering at most 5 same products at a time");
+        System.out.println("** For safety issues, we only allow ordering at most 5 same products at a time **");
     }
 
     @Override
@@ -85,8 +85,7 @@ public class MachineInterfaceImpl implements MachineInterface {
     public void handlePurchaseRequest(PurchaseRequest request, CashNoteBundle cashNoteBundle) {
         System.out.println("==============================ORDER INFO====================================");
         int change = controller.getChange(request, cashNoteBundle);
-        boolean userConfirmedOrder = prompConfirmation(request, cashNoteBundle);
-
+        boolean userConfirmedOrder = promptConfirmation(request, cashNoteBundle);
         if (userConfirmedOrder){
             System.out.println("Order confirmed, releasing product and change if any...");
             controller.releaseProduct(request.getProduct(), request.getQuantity());
@@ -106,7 +105,7 @@ public class MachineInterfaceImpl implements MachineInterface {
        this.state.displayPaymentResult();
     }
 
-    private boolean prompConfirmation(PurchaseRequest request, CashNoteBundle cashNoteBundle) {
+    private boolean promptConfirmation(PurchaseRequest request, CashNoteBundle cashNoteBundle) {
         System.out.println("You are ordering product: " + request.getProduct());
         System.out.println("Total money to pay: " + controller.getTotalPayment(request) * 1000 + " VND");
         System.out.println("You inputted: " + controller.getTotalMoneyInput(cashNoteBundle) * 1000 + " VND");
