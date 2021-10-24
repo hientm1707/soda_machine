@@ -1,4 +1,4 @@
-package request;
+package entities.request;
 
 import entities.product.Product;
 

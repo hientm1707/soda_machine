@@ -7,6 +7,7 @@ public class CashBackDeliveryImpl implements CashBackDelivery {
     public void deliverChangeToUser(int value) {
         /* Pretend to deliver cashback to user */
         if (value == 0) {
+            System.out.println("You have used up your money input, no change left");
             return;
         }
         System.out.println("Delivering change: " + value * 1000 + " VND...");

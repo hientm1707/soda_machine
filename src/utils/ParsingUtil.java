@@ -6,7 +6,7 @@ import entities.cashnote.CashNoteBundle;
 import java.util.List;
 
 public class ParsingUtil {
-    public static CashNoteBundle parseListOfCashNotesToCashNoteBundle(List<Integer> cashNotes){
+    public static CashNoteBundle parseToCashNoteBundle(List<Integer> cashNotes){
         int numOfTenNotes = 0;
         int numOfTwentyNotes = 0;
         int numOfFiftyNotes = 0;

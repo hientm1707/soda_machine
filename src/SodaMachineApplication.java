@@ -1,8 +1,8 @@
 import entities.cashnote.CashNoteBundle;
-import interfaces.MachineUI;
-import interfaces.impl.MachineUIImpl;
+import interfaces.MachineInterface;
+import interfaces.impl.MachineInterfaceImpl;
 import entities.product.ProductFactory;
-import request.PurchaseRequest;
+import entities.request.PurchaseRequest;
 import utils.ParsingUtil;
 import utils.Validator;
 
@@ -10,52 +10,60 @@ import java.util.*;
 
 public class SodaMachineApplication {
     public static void main (String[] args){
-
         System.out.println("This is a simulator of a soda selling machine ... MOMO TEST");
         Scanner scanner = new Scanner(System.in);
-        MachineUI machineUI = new MachineUIImpl();
-        while (true) {
+        MachineInterface machineInterface = new MachineInterfaceImpl();
+        while (true) { /* Loop forever */
+
             /* Display screen */
-            machineUI.displayGreetingMessage();
-            machineUI.displayAvailableProducts();
+            machineInterface.displayGreetingMessage();
+            machineInterface.displayAvailableProducts();
 
             /* User choose entities.product and entities.product to buy */
-            machineUI.displayOptionInputPrompt();
+            machineInterface.displayOptionInputPrompt();
             int option = scanner.nextInt();
-            machineUI.displayQuantityInputPrompt();
+            machineInterface.displayQuantityInputPrompt();
             int quantity = scanner.nextInt();
 
+            /* Validate input */
             try {
                 Validator.validateOptionAndQuantity(option, quantity);
             } catch (Exception e) {
-                machineUI.displayExceptionMessage();
-                machineUI.displayExceptionCauseMessage(e.getMessage());
-                machineUI.displayRunAgainPrompt();
+                machineInterface.displayInputExceptionMessage();
+                machineInterface.displayMessage(e.getMessage());
+                machineInterface.displayRunAgainPrompt();
                 continue;
             }
-            /* Input cash notes  */
-            /* Only accept 10, 20, 50, 100, 200 K VND */
-            machineUI.displayMoneyInputPrompt();
-            machineUI.displayNumberOfNotesPrompt();
-            int numOfNotesInputting = scanner.nextInt();
-            machineUI.displayCashNotePrompt();
 
-            List<Integer> inputCashNotes = new LinkedList<>();
+            /* Input cash notes  */
+            /* Only accept 10, 20, 50, 100, 200 (thousand) VND */
+            machineInterface.displayMoneyInputPrompt();
+            machineInterface.displayNumberOfNotesPrompt();
+            int numOfNotesInputting = scanner.nextInt();
+            machineInterface.displayCashNotePrompt();
+
+            /* receiveNotes */
             for (int i = 0; i < numOfNotesInputting; i++) {
-                inputCashNotes.add(scanner.nextInt());
+                machineInterface.receiveNote(scanner.nextInt());
             }
 
-            CashNoteBundle cashNoteBundle = ParsingUtil.parseListOfCashNotesToCashNoteBundle(inputCashNotes);
+            /* Parse to easy-to-handle objects */
+            CashNoteBundle cashNoteBundle = ParsingUtil.parseToCashNoteBundle((machineInterface.getInputtedCashNotes()));
             PurchaseRequest purchaseRequest = new PurchaseRequest(ProductFactory.createProduct(option), quantity);
 
+            /* Begin handling request */
             try {
-                machineUI.handlePurchaseRequest(purchaseRequest, cashNoteBundle);
+                machineInterface.handlePurchaseRequest(purchaseRequest, cashNoteBundle);
             } catch (Exception e) {
-                machineUI.displayPaymentResult(false);
-                machineUI.displayExceptionCauseMessage(e.getMessage());
+                machineInterface.setState(false);
+                machineInterface.displayPaymentResult();
+                machineInterface.displayMessage(e.getMessage());
+                machineInterface.clearMoneyBuffer();
                 continue;
             }
-            machineUI.displayPaymentResult(true);
+            machineInterface.setState(true);
+            machineInterface.displayPaymentResult();
+            machineInterface.clearMoneyBuffer();
         }
     }
 }

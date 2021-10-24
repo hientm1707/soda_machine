@@ -2,7 +2,7 @@ package interfaces.impl;
 import interfaces.Calculator;
 import entities.cashnote.CashNote;
 import entities.cashnote.CashNoteBundle;
-import request.PurchaseRequest;
+import entities.request.PurchaseRequest;
 
 public class CalculatorImpl implements Calculator {
     @Override

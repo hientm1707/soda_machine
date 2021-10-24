@@ -1,8 +1,8 @@
 package exceptions;
 
-public class InsufficientMoneyException extends RuntimeException{
+public class InsufficientMoneyInputException extends RuntimeException{
 
-    public InsufficientMoneyException(String message) {
+    public InsufficientMoneyInputException(String message) {
         super(message);
     }
 
