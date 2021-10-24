@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface CashbackGiver {
+public interface CashBackDelivery {
     void deliverChangeToUser(int value);
     void deliverRefundToUser(int value);
 }

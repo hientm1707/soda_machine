@@ -3,20 +3,20 @@ package controller;
 import entities.cashnote.CashNoteBundle;
 import entities.product.Product;
 import interfaces.Calculator;
-import interfaces.CashbackGiver;
+import interfaces.CashBackDelivery;
 import interfaces.Releasable;
 
 
 import exceptions.InsufficientMoneyException;
 import interfaces.impl.CalculatorImpl;
 
-import interfaces.impl.CashBackGiverImpl;
+import interfaces.impl.CashBackDeliveryImpl;
 import interfaces.impl.ProductReleaser;
 
 import request.PurchaseRequest;
 public class MachineController {
     private final Calculator calculator = new CalculatorImpl();
-    private final CashbackGiver cashBackGiver = new CashBackGiverImpl();
+    private final CashBackDelivery cashBackDelivery = new CashBackDeliveryImpl();
     private final Releasable productReleaser = new ProductReleaser();
 
     public int getChange(PurchaseRequest request, CashNoteBundle bundle){
@@ -33,20 +33,19 @@ public class MachineController {
     }
 
     public void deliverChangeToUser(int value){
-        cashBackGiver.deliverChangeToUser(value);
+        cashBackDelivery.deliverChangeToUser(value);
     }
 
-    public void deliverRefundToUSer(int value){
-        cashBackGiver.deliverRefundToUser(value);
+    public void deliverRefundToUser(int value){
+        cashBackDelivery.deliverRefundToUser(value);
     }
 
-    public int calculateTotalPayment(PurchaseRequest request)
+    public int getTotalPayment(PurchaseRequest request)
     {
         return calculator.calculateTotalPayment(request);
     }
 
-
-    public int calculateTotalMoneyInput(CashNoteBundle bundle) {
+    public int getTotalMoneyInput(CashNoteBundle bundle) {
         return calculator.calculateTotalMoneyInput(bundle);
     }
 

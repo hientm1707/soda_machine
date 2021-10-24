@@ -86,7 +86,7 @@ public class MachineUIImpl implements MachineUI {
             return;
         }
         System.out.println("Order cancelled, refunding...");
-        controller.deliverRefundToUSer(request.getQuantity());
+        controller.deliverRefundToUser(controller.getTotalMoneyInput(cashNoteBundle));
         throw new UserCancelException("User cancelled the request");
     }
 
@@ -95,15 +95,15 @@ public class MachineUIImpl implements MachineUI {
     public void displayPaymentResult(boolean success) {
         if(success) {
             System.out.println("*********************************************Order completed!********************************************************");
-        } else{
+        } else {
             System.out.print("Order failed: ");
         }
     }
 
     private boolean prompConfirmation(PurchaseRequest request, CashNoteBundle cashNoteBundle) {
         System.out.println("You are ordering product: " + request.getProduct());
-        System.out.println("Total money to pay: " + controller.calculateTotalPayment(request)*1000 + " VND");
-        System.out.println("You inputted: " + controller.calculateTotalMoneyInput(cashNoteBundle)*1000 + " VND");
+        System.out.println("Total money to pay: " + controller.getTotalPayment(request)*1000 + " VND");
+        System.out.println("You inputted: " + controller.getTotalMoneyInput(cashNoteBundle)*1000 + " VND");
         System.out.println("Do you really want to proceed? (Y/N) ");
         /* Prompt user to choose confirm ordering */
         while (true) {

@@ -12,15 +12,6 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public int calculateChange(PurchaseRequest request, CashNoteBundle bundle) {
-        int change = calculateTotalMoneyInput(bundle) - calculateTotalPayment(request);
-        if (change < 0){
-            throw new InsufficientMoneyException("Not enough money");
-        }
-        return change;
-    }
-
-    @Override
     public int calculateTotalMoneyInput(CashNoteBundle bundle) {
         return bundle.getNumOfTenNotes() * CashNote.TEN.getValue()
                 + bundle.getNumOfTwentyNotes() * CashNote.TWENTY.getValue()
